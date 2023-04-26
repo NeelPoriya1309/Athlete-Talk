@@ -55,7 +55,7 @@ const PlanDetails = ({ plan, planVideos, taken }) => {
         Back
       </Button>
       <Box>
-        <Typography variant="h4">{plan.name}</Typography>
+        <Typography variant="h4" data-testid ="Plan Title" >{plan.name}</Typography>
         <Typography variant="h6">{plan.description}</Typography>
         <Typography variant="h6">
           <b>Created By:</b> {plan.creator.name}
@@ -120,7 +120,7 @@ const PlanDetails = ({ plan, planVideos, taken }) => {
         </Button>
       )}
       {planTaken && (
-        <Button disabled variant="contained">
+        <Button disabled  variant="contained">
           Already Taken!
         </Button>
       )}

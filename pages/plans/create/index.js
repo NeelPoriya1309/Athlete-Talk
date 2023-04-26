@@ -143,6 +143,7 @@ const CreatePlans = ({ categories, videos }) => {
       <br></br>
       <MultipleSelectChip
         label="Categories"
+        id="categories"
         names={extractedCategories}
         personName={selectedCategories}
         setPersonName={setSelectedCategories}

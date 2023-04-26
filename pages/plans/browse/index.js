@@ -39,7 +39,7 @@ const BrowsePlans = ({ plans }) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
+                  <Button id={plan._id} 
                     variant="contained"
                     onClick={(e) => {
                       e.preventDefault();

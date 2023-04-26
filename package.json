@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -44,5 +46,9 @@
     "recharts": "^2.5.0",
     "validator": "^13.9.0",
     "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.10.0"
   }
 }

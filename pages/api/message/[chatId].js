@@ -13,7 +13,7 @@ handler.get(
   catchAsync(async (req, res) => {
     try {
       const messages = await Message.find({ chat: req.query.chatId })
-        .populate('sender', 'name email')
+        .populate('sender', 'name email imageUrl')
         .populate('chat');
       res.json(messages);
     } catch (error) {

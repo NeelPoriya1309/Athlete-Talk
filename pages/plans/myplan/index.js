@@ -75,6 +75,7 @@ const MyPlans = ({ userPlans }) => {
                 <Typography
                   gutterBottom
                   variant="h5"
+                  data-testid="MyPlan Title"
                   component="div"
                   sx={{ mt: '10px' }}
                 >
@@ -91,7 +92,7 @@ const MyPlans = ({ userPlans }) => {
                   // <Link href={`/plans/myplan/continue/${plan.plan.id}`}>
                   //   Continue
                   // </Link>
-                  <Button
+                  <Button id={plan.plan.id}
                     onClick={(e) => {
                       e.preventDefault();
                       router.push(`/plans/myplan/continue/${plan.plan.id}`);

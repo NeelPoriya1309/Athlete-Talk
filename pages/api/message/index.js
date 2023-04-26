@@ -29,11 +29,11 @@ handler.post(
     try {
       var message = await Message.create(newMessage);
 
-      message = await message.populate('sender', 'name');
+      message = await message.populate('sender', 'name imageUrl');
       message = await message.populate('chat');
       message = await User.populate(message, {
         path: 'chat.users',
-        select: 'name email',
+        select: 'name email imageUrl',
       });
 
       await Chat.findByIdAndUpdate(req.body.chatId, {

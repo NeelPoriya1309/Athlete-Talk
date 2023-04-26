@@ -1,6 +1,8 @@
 const nc = require('next-connect');
 const authController = require('../../../controllers/authController');
 const catchAsync = require('../../../utils/catchAsync');
+const Chat = require('../../../models/chatModel');
+const User = require('../../../models/userModel');
 
 const handler = nc({
   onError: authController.handleError,
