@@ -68,6 +68,7 @@ function UploadVideo({ categories }) {
       })
       .catch((err) => {
         console.log(err);
+        alert(err);
       });
   };
 

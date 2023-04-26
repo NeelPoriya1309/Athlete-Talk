@@ -79,10 +79,28 @@ handler.post(
   authController.protect,
   authController.restrictTo('admin', 'coach'),
   async (req, res, next) => {
+    if (
+      req.file.mimetype !== 'video/mp4' &&
+      req.file.mimetype !== 'video/mkv' &&
+      req.file.mimetype !== 'video/avi' &&
+      req.file.mimetype !== 'video/mov' &&
+      req.file.mimetype !== 'video/wmv' &&
+      req.file.mimetype !== 'video/flv' &&
+      req.file.mimetype !== 'video/avchd' &&
+      req.file.mimetype !== 'video/webm' &&
+      req.file.mimetype !== 'video/mpeg-2'
+    ) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Please upload a valid video file',
+      });
+    }
     // console.log(req.body.categories);
     const categories = req.body.categories.split(',');
     //Get auth from Google Drive
     let auth = await authenticateGoogle();
+
+    //check if the extension of the file is valid video format
 
     // Upload video to Google Drive and obtain
     //  response of the file uploaded.
