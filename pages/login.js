@@ -65,6 +65,7 @@ export default function SignInSide() {
       router.push('/dashboard');
       return;
     }
+    setIsLoading(false);
     let errorMessage = 'Some error occured! Try again later.';
     try {
       errorMessage = responseData.message;
@@ -73,7 +74,6 @@ export default function SignInSide() {
       console.log(errorMessage);
     }
     alert(errorMessage);
-    setIsLoading(false);
   };
 
   return (

@@ -45,11 +45,6 @@ const AppHeader = () => {
 
           {loggedIn && (
             <>
-              <IconButton title="Notifications" color="secondary">
-                {/* <Badge badgeContent={} color="error"> */}
-                <Notifications />
-                {/* </Badge> */}
-              </IconButton>
               <IconButton
                 onClick={(e) => {
                   router.push('/profile');
