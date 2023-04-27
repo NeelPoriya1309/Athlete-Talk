@@ -1,7 +1,17 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import server from '../../../../server';
+import { VideoCameraBack, Videocam } from '@mui/icons-material';
 
 const ContinuePlan = ({ videos, day }) => {
   const router = useRouter();
@@ -84,23 +94,30 @@ const ContinuePlan = ({ videos, day }) => {
   };
 
   const concentPage = (
-    <Paper elevation={2}>
+    <Paper elevation={2} sx={{ p: '20px' }}>
       <Box>
         <Typography variant="h4">
           Welcome to Day {day + 1} of your plan...
         </Typography>
-        <Typography variant="h5">
-          You have {videos.length} videos to watch today:
+        <Typography mt={1} mb={2} variant="h5">
+          You have <b>{videos.length}</b> videos to watch today:
         </Typography>
-        <ul>
+        <List>
           {videos.map((video) => (
-            <li key={video._id}>{video.title}</li>
+            <ListItem key={video._id}>
+              <ListItemIcon>
+                <Videocam />
+              </ListItemIcon>
+              <ListItemText>{video.title}</ListItemText>
+            </ListItem>
           ))}
-        </ul>
-        <Button onClick={handleBack}>Back</Button>
-        <Button variant="contained" onClick={handleStart}>
-          Start
-        </Button>
+        </List>
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Button onClick={handleBack}>Back</Button>
+          <Button variant="contained" onClick={handleStart}>
+            Start
+          </Button>
+        </Box>
       </Box>
     </Paper>
   );
