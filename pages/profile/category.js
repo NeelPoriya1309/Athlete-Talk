@@ -62,7 +62,7 @@ const category = ({ categories, userCategories }) => {
       setPreferredCategories([...preferredCategories, categories[idx]]);
     }
 
-    console.log(preferredCategories);
+    // console.log(preferredCategories);
   };
 
   const handleUpdateCategory = async () => {

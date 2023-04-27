@@ -11,7 +11,7 @@ const handler = nc({
 handler.get(
   authController.protect,
   catchAsync(async (req, res, next) => {
-    console.log('hello from the api videos/{id}');
+    // console.log('hello from the api videos/{id}');
     const { id } = req.query;
 
     const video = await Video.findById(id);

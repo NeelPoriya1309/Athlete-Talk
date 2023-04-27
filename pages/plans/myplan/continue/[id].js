@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import server from '../../../../server';
@@ -84,23 +84,25 @@ const ContinuePlan = ({ videos, day }) => {
   };
 
   const concentPage = (
-    <Box>
-      <Typography variant="h4">
-        Welcome to Day {day + 1} of your plan...
-      </Typography>
-      <Typography variant="h5">
-        You have {videos.length} videos to watch today:
-      </Typography>
-      <ul>
-        {videos.map((video) => (
-          <li key={video._id}>{video.title}</li>
-        ))}
-      </ul>
-      <Button onClick={handleBack}>Back</Button>
-      <Button variant="contained" onClick={handleStart}>
-        Start
-      </Button>
-    </Box>
+    <Paper elevation={2}>
+      <Box>
+        <Typography variant="h4">
+          Welcome to Day {day + 1} of your plan...
+        </Typography>
+        <Typography variant="h5">
+          You have {videos.length} videos to watch today:
+        </Typography>
+        <ul>
+          {videos.map((video) => (
+            <li key={video._id}>{video.title}</li>
+          ))}
+        </ul>
+        <Button onClick={handleBack}>Back</Button>
+        <Button variant="contained" onClick={handleStart}>
+          Start
+        </Button>
+      </Box>
+    </Paper>
   );
   const videoPage = (
     <>

@@ -57,7 +57,7 @@ const getSenderFull = (loggedUser, users) => {
 };
 
 const ScrollableChat = ({ messages }) => {
-  console.log(messages);
+  // console.log(messages);
   //   useEffect(() => {
   //     socketInitializer();
 

@@ -58,7 +58,7 @@ planSchema.pre('save', async function (next) {
   for (const video of this.videos) {
     let totalDuration = 0;
     for (const v of video) {
-      console.log(`${server}/api/videos/${v.toString()}/duration`);
+      // console.log(`${server}/api/videos/${v.toString()}/duration`);
       const dbVideo = await Video.find({ _id: v.toString() });
 
       const gDriveId = dbVideo[0].gDriveID;

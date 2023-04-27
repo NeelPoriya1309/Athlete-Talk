@@ -69,7 +69,7 @@ const ChatBox = ({ selectedChat }) => {
         });
 
         const data = await responseData.json();
-        console.log(data);
+        // console.log(data);
 
         socket.emit('new message', data);
 
@@ -92,7 +92,7 @@ const ChatBox = ({ selectedChat }) => {
         const data = await responseData.json();
 
         setMessages(data);
-        console.log(data);
+        // console.log(data);
         setLoading(false);
         socket.emit('join chat', selectedChat._id);
       } catch (error) {}

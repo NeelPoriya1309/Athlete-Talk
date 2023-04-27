@@ -36,7 +36,7 @@ const colors = [
 ];
 
 const Dashboard = ({ plans, categories }) => {
-  console.log(plans);
+  // console.log(plans);
   const router = useRouter();
   const authContext = useContext(AuthContext);
   const completedPlans = plans.filter(

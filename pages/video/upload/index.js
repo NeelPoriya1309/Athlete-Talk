@@ -63,7 +63,7 @@ function UploadVideo({ categories }) {
         }
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         alert('Video Uploaded Successfully!');
       })
       .catch((err) => {
