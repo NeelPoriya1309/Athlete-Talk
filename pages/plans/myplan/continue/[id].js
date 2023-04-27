@@ -12,6 +12,12 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import server from '../../../../server';
 import { VideoCameraBack, Videocam } from '@mui/icons-material';
+import dynamic from 'next/dynamic';
+
+const BasicRadialChart = dynamic(
+  () => import('../../../../components/BasicRadialChart'),
+  { ssr: false }
+);
 
 const ContinuePlan = ({ videos, day }) => {
   const router = useRouter();
@@ -20,6 +26,7 @@ const ContinuePlan = ({ videos, day }) => {
   const [currentVideo, setCurrentVideo] = useState(0);
   const [startTime, setStartTime] = useState(null);
   const [score, setScore] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleStart = (e) => {
     e.preventDefault();
@@ -61,6 +68,7 @@ const ContinuePlan = ({ videos, day }) => {
 
   const handleFinish = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const endTime = Date.now();
 
     const timeTaken = endTime - startTime;
@@ -91,79 +99,140 @@ const ContinuePlan = ({ videos, day }) => {
       console.log(err);
       router.push('/plans/myplan');
     }
+    setLoading(false);
   };
 
   const concentPage = (
-    <Paper elevation={2} sx={{ p: '20px' }}>
-      <Box>
-        <Typography variant="h4">
-          Welcome to Day {day + 1} of your plan...
-        </Typography>
-        <Typography mt={1} mb={2} variant="h5">
-          You have <b>{videos.length}</b> videos to watch today:
-        </Typography>
-        <List>
-          {videos.map((video) => (
-            <ListItem key={video._id}>
-              <ListItemIcon>
-                <Videocam />
-              </ListItemIcon>
-              <ListItemText>{video.title}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
-        <Box display={'flex'} justifyContent={'space-between'}>
-          <Button onClick={handleBack}>Back</Button>
-          <Button variant="contained" onClick={handleStart}>
-            Start
-          </Button>
-        </Box>
+    <Paper
+      elevation={2}
+      sx={{
+        p: '20px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Typography variant="h4">
+        Welcome to Day {day + 1} of your plan...
+      </Typography>
+      <Typography mt={1} mb={2} variant="h5">
+        You have <b>{videos.length}</b> videos to watch today:
+      </Typography>
+      <List>
+        {videos.map((video) => (
+          <ListItem key={video._id}>
+            <ListItemIcon>
+              <Videocam />
+            </ListItemIcon>
+            <ListItemText>{video.title}</ListItemText>
+          </ListItem>
+        ))}
+      </List>
+      <Box display={'flex'} justifyContent={'space-between'} mt={'auto'}>
+        <Button onClick={handleBack}>Back</Button>
+        <Button variant="contained" onClick={handleStart}>
+          Start
+        </Button>
       </Box>
     </Paper>
   );
   const videoPage = (
-    <>
-      <Typography variant="h5">Exercise # {currentVideo + 1}</Typography>
-      <Typography variant="h6">{videos[currentVideo].title}</Typography>
-      <Box>
+    <Paper
+      elevation={2}
+      sx={{
+        p: '20px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          textAlign: 'center',
+          mb: '20px',
+          fontWeight: 'bold',
+        }}
+      >
+        Exercise # {currentVideo + 1}
+      </Typography>
+      <Typography
+        variant="h5"
+        sx={{
+          textAlign: 'center',
+          mb: '20px',
+        }}
+      >
+        <b>Title</b>: {videos[currentVideo].title}
+      </Typography>
+      <Box display={'flex'} justifyContent={'center'}>
         <iframe
           src={`https://drive.google.com/file/d/${videos[currentVideo].gDriveID}/preview`}
-          width="640"
+          width="720"
           height="480"
           allowFullScreen
           allow="autoplay"
           frameborder="0"
+          style={{
+            borderRadius: '10px',
+          }}
         ></iframe>
       </Box>
-      <Button onClick={handleBack}>Back</Button>
-      {currentVideo === videos.length - 1 && (
-        <Button variant="contained" onClick={handleFinish}>
-          Finish
-        </Button>
-      )}
-      {currentVideo !== videos.length - 1 && (
-        <Button variant="contained" onClick={handleStart}>
-          Next
-        </Button>
-      )}
-    </>
+      <Box display={'flex'} justifyContent={'space-between'} mt={'auto'}>
+        <Button onClick={handleBack}>Back</Button>
+        {currentVideo === videos.length - 1 && (
+          <Button disabled={loading} variant="contained" onClick={handleFinish}>
+            Finish
+          </Button>
+        )}
+        {currentVideo !== videos.length - 1 && (
+          <Button variant="contained" onClick={handleStart}>
+            Next
+          </Button>
+        )}
+      </Box>
+    </Paper>
   );
   const finishPage = (
-    <>
-      <Typography variant="h5">
-        Congratulations! You have completed today`s task.
-      </Typography>
-      <Typography variant="h6">Your score is: {score + ''}</Typography>
-      <Button
-        variant="contained"
-        onClick={(e) => {
-          e.preventDefault();
-          router.push('/plans/myplan');
+    <Paper
+      elevation={2}
+      sx={{
+        p: '20px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{
+          textAlign: 'center',
+          mb: '20px',
+          fontWeight: 'bold',
         }}
       >
-        Go to plans
-      </Button>
-    </>
+        Congratulations! You have completed today`s task.
+      </Typography>
+      <Typography variant="h6">
+        Your score is: {Math.abs(score) + ''}
+      </Typography>
+      <BasicRadialChart
+        completed={Math.abs(score)}
+        total={100}
+        message={'Score'}
+      />
+      <Box display={'flex'} justifyContent={'space-between'} mt={'auto'}>
+        <Button
+          variant="contained"
+          onClick={(e) => {
+            e.preventDefault();
+            router.push('/plans/myplan');
+          }}
+        >
+          Go to plans
+        </Button>
+      </Box>
+    </Paper>
   );
   const pages = [concentPage, videoPage, finishPage];
   return <>{pages[currentPage]}</>;

@@ -49,7 +49,16 @@ const Dashboard = ({ plans, categories }) => {
 
   return (
     <>
-      <Typography variant="h4">Welcome, {authContext.user.name}</Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          pt: 2,
+        }}
+      >
+        Welcome, {authContext.user.name}
+      </Typography>
       <br></br>
       <Paper elevation={2}>
         <Typography variant="h5" p={2}>
@@ -71,6 +80,7 @@ const Dashboard = ({ plans, categories }) => {
                 <BasicRadialChart
                   completed={completedPlans.length}
                   total={plans.length}
+                  message={'Plan Progression'}
                 />
               </Grid>
               <Grid item xs={12} md={4} p={2}>
@@ -107,20 +117,25 @@ const Dashboard = ({ plans, categories }) => {
                     <Typography sx={{ fontWeight: 'bold' }} variant="h6">
                       {plan.plan.name}
                     </Typography>
-                    <Typography variant="body1">
-                      {plan.progress}/{plan.plan.noOfDays}
-                    </Typography>
-                    <a
-                      key={plan._id}
-                      href={`/api/achievement/${plan.plan._id}`}
-                      target="_black"
-                      style={{
-                        color: 'black',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <Icon component={Download} sx={{ marginLeft: '20px' }} />
-                    </a>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography variant="body1">
+                        {plan.progress}/{plan.plan.noOfDays}
+                      </Typography>
+                      <a
+                        key={plan._id}
+                        href={`/api/achievement/${plan.plan._id}`}
+                        target="_black"
+                        style={{
+                          color: 'black',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <Icon
+                          component={Download}
+                          sx={{ marginLeft: '20px' }}
+                        />
+                      </a>
+                    </Box>
                   </Box>
                 ))}
               </Grid>
@@ -144,7 +159,11 @@ const Dashboard = ({ plans, categories }) => {
         )}
 
         <Box
-          sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+          }}
           m={2}
           pb={2}
         >

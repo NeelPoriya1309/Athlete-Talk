@@ -26,11 +26,13 @@ function createHex() {
 }
 
 const gradients = [
-  'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
-  'linear-gradient(43deg, #4158D0 0%, #FFCC70 100%)',
   'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
   'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
   'linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)',
+  'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+  'linear-gradient(45deg, #FFC3A0 0%, #FFAFBD 100%)',
+  'linear-gradient(45deg, #B6CEE8 0%, #F578DC 100%)',
+  'linear-gradient(45deg, #F3FFB6 0%, #CA74F7 100%)',
 ];
 
 const MyPlans = ({ userPlans }) => {
@@ -62,13 +64,14 @@ const MyPlans = ({ userPlans }) => {
                   borderRadius: '50px',
                   padding: '5px 10px',
                   boxShadow: `0px 2px 4px #2ecc71`,
-                  position: 'absolute',
+                  position: 'relative',
                   mt: '-20px',
                   ml: '5px',
                 }}
               >
                 <Typography variant="h6" sx={{ verticalAlign: 'middle' }}>
-                  Progress : {(plan.progress / plan.plan.noOfDays) * 100}%
+                  Progress :{' '}
+                  {(plan.progress / plan.plan.noOfDays).toPrecision(2) * 100}%
                 </Typography>
               </Box>
               <CardContent>

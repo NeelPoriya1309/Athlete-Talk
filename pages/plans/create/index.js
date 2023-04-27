@@ -1,4 +1,16 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
 import React, { useState, useRef, useEffect } from 'react';
 import FormDialog from '../../../components/FormDialog';
 import MultipleSelectChip from '../../../components/MultiSelect';
@@ -16,9 +28,11 @@ const CreatePlans = ({ categories, videos }) => {
   const [planName, setPlanName] = useState('');
   const [planDes, setPlanDes] = useState('');
   const [videosSelected, setVideosSelected] = useState([[]]);
+  const [loading, setLoading] = useState(false);
   // console.log(videosSelected);
   const handleCreatePlans = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (
       !planName ||
@@ -62,6 +76,7 @@ const CreatePlans = ({ categories, videos }) => {
       alert('Error creating plan');
       console.log(postResponse);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -169,27 +184,48 @@ const CreatePlans = ({ categories, videos }) => {
   );
   const page2 = (
     <>
-      <Typography variant="h3">Summary</Typography>
-      <Typography variant="h5">Plan Name: {planName}</Typography>
-      <Typography variant="h5">Description: {planDes}</Typography>
-      <Typography variant="h5">No of Days: {noOfDays}</Typography>
-      <Typography variant="h5">
-        Categories:{' '}
-        {selectedCategories.map((categories) => {
-          return categories + ', ';
-        })}
-      </Typography>
-      {videosSelected.map((vid, index) => {
-        return (
-          <Typography variant="h5" key={index}>
-            Day {index + 1}:{' '}
-            {vid.map((id) => {
-              const video = videos.find((video) => video.id == id);
-              return video.title + ', ';
+      <Typography variant="h4">Summary</Typography>
+      <TableContainer component={Paper} sx={{ height: '400px', mt: '20px' }}>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>Plan Name</TableCell>
+              <TableCell>{planName}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Description</TableCell>
+              <TableCell>{planDes}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>No Of Days</TableCell>
+              <TableCell>{noOfDays}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Categories</TableCell>
+              <TableCell>{selectedCategories.join(', ')}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <b>Day</b>
+              </TableCell>
+              <TableCell>
+                <b>Video Name</b>
+              </TableCell>
+            </TableRow>
+            {videosSelected.map((vid, index) => {
+              return vid.map((id) => {
+                const video = videos.find((video) => video.id == id);
+                return (
+                  <TableRow key={id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{video.title}</TableCell>
+                  </TableRow>
+                );
+              });
             })}
-          </Typography>
-        );
-      })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 
@@ -209,19 +245,25 @@ const CreatePlans = ({ categories, videos }) => {
       >
         {pages[currentPage]}
         <br></br>
-        <Button variant="standard" onClick={handleBack}>
-          Back
-        </Button>
-        {currentPage != pages.length - 1 && (
-          <Button variant="contained" onClick={handleNext}>
-            Next
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Button variant="standard" onClick={handleBack}>
+            Back
           </Button>
-        )}
-        {currentPage == pages.length - 1 && (
-          <Button variant="contained" onClick={handleCreatePlans}>
-            Submit
-          </Button>
-        )}
+          {currentPage != pages.length - 1 && (
+            <Button variant="contained" onClick={handleNext}>
+              Next
+            </Button>
+          )}
+          {currentPage == pages.length - 1 && (
+            <Button
+              disabled={loading}
+              variant="contained"
+              onClick={handleCreatePlans}
+            >
+              Submit
+            </Button>
+          )}
+        </Box>
       </Box>
     </>
   );

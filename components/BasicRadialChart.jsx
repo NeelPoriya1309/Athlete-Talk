@@ -78,7 +78,7 @@ const App = (props) => {
       stroke: {
         lineCap: 'round',
       },
-      labels: ['Plan Progression'],
+      labels: [props.message],
     },
   };
 
