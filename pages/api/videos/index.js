@@ -21,6 +21,7 @@ handler.get(
       results: videos.length,
       data: {
         videos,
+        preferredCategories: req.user.preferredCategories,
       },
     });
   })

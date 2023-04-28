@@ -3,7 +3,31 @@ const { server } = require('./../../../utils/server');
 import VideoCard from '../../../components/VideoCard';
 import { Box, Grid } from '@mui/material';
 
-const BrowseVideos = ({ videos }) => {
+const BrowseVideos = ({ videos, preferredCategories }) => {
+  const videosSortedByPreferredCategories = plans.sort((a, b) => {
+    const aCategory = a.categories;
+    const bCategory = b.categories;
+    let presentA = false;
+    let presentB = false;
+    for (let i = 0; i < preferredCategories.length; i++) {
+      if (aCategory.includes(preferredCategories[i])) {
+        presentA = true;
+      }
+      if (bCategory.includes(preferredCategories[i])) {
+        presentB = true;
+      }
+    }
+    if (!presentA && !presentB) {
+      return 0;
+    }
+    if (!presentA) {
+      return 1;
+    }
+    if (!presentB) {
+      return -1;
+    }
+    return 0;
+  });
   return (
     <Box
       sx={{
@@ -13,9 +37,9 @@ const BrowseVideos = ({ videos }) => {
         overflow: 'hidden',
       }}
     >
-      {videos &&
-        videos.length !== 0 &&
-        videos.map((video, idx) => (
+      {videosSortedByPreferredCategories &&
+        videosSortedByPreferredCategories.length !== 0 &&
+        videosSortedByPreferredCategories.map((video, idx) => (
           <Box
             key={idx}
             sx={{
@@ -48,7 +72,12 @@ export async function getServerSideProps(context) {
     });
     if (response.ok) {
       const data = await response.json();
-      return { props: { videos: data.data.videos } };
+      return {
+        props: {
+          videos: data.data.videos,
+          preferredCategories: data.data.preferredCategories,
+        },
+      };
     } else {
       throw new Error('something went wrong!');
     }
