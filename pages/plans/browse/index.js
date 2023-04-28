@@ -70,7 +70,7 @@ export async function getServerSideProps(context) {
     };
   }
   try {
-    const plans = await fetch(`${server}/api/plans`, {
+    const plans = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/plans`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

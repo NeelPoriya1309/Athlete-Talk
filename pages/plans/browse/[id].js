@@ -28,7 +28,7 @@ const PlanDetails = ({ plan, planVideos, taken }) => {
   const addPlanHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${server}/api/user-plans`, {
+      const response = await fetch(`/api/user-plans`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
