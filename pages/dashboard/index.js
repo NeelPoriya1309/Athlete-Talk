@@ -181,7 +181,7 @@ const Dashboard = ({ plans, categories }) => {
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
           }}
           m={2}
           pb={2}
