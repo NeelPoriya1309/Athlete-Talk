@@ -12,12 +12,37 @@ import { useRouter } from 'next/router';
 import React from 'react';
 const { server } = require('./../../../utils/server');
 
-const BrowsePlans = ({ plans }) => {
+const BrowsePlans = ({ plans, preferredCategories }) => {
+  const plansSortedByPreferredCategories = plans.sort((a, b) => {
+    const aCategory = a.categories;
+    const bCategory = b.categories;
+    let presentA = false;
+    let presentB = false;
+    for (let i = 0; i < preferredCategories.length; i++) {
+      if (aCategory.includes(preferredCategories[i])) {
+        presentA = true;
+      }
+      if (bCategory.includes(preferredCategories[i])) {
+        presentB = true;
+      }
+    }
+    if (!presentA && !presentB) {
+      return 0;
+    }
+    if (!presentA) {
+      return 1;
+    }
+    if (!presentB) {
+      return -1;
+    }
+    return 0;
+  });
+
   const router = useRouter();
   return (
     <>
       <Grid container spacing={2}>
-        {plans.map((plan, idx) => {
+        {plansSortedByPreferredCategories.map((plan, idx) => {
           return (
             <Grid xs={4} key={idx} item>
               <Card sx={{ minWidth: 275 }}>
@@ -84,6 +109,7 @@ export async function getServerSideProps(context) {
       return {
         props: {
           plans: data.data.plans,
+          preferredCategories: data.data.preferredCategories,
         },
       };
     } else {

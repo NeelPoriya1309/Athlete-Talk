@@ -14,6 +14,8 @@ const handler = nc({
 handler.get(
   authController.protect,
   catchAsync(async (req, res, next) => {
+    //get all plans sorted by user's preferred categories
+
     const plans = await Plan.find({}).populate('creator');
 
     res.status(200).json({
@@ -21,6 +23,7 @@ handler.get(
       results: plans.length,
       data: {
         plans,
+        preferredCategories: req.user.preferredCategories,
       },
     });
   })
