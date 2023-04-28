@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -11,6 +12,27 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 const { server } = require('./../../../utils/server');
+
+const colors = [
+  '#f8bbd0',
+  '#e1bee7',
+  '#d1c4e9',
+  '#c5cae9',
+  '#bbdefb',
+  '#b3e5fc',
+  '#b2ebf2',
+  '#b2dfdb',
+  '#c8e6c9',
+  '#dcedc8',
+  '#f0f4c3',
+  '#fff9c4',
+  '#ffecb3',
+  '#ffe0b2',
+  '#ffccbc',
+  '#d7ccc8',
+  '#f5f5f5',
+  '#cfd8dc',
+];
 
 const BrowsePlans = ({ plans, preferredCategories }) => {
   const plansSortedByPreferredCategories = plans.sort((a, b) => {
@@ -41,20 +63,54 @@ const BrowsePlans = ({ plans, preferredCategories }) => {
   const router = useRouter();
   return (
     <>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {plansSortedByPreferredCategories.map((plan, idx) => {
           return (
-            <Grid xs={4} key={idx} item>
-              <Card sx={{ minWidth: 275 }}>
-                <CardContent>
-                  <Typography color="text.primary" variant="h5" gutterBottom>
+            // <Grid xs={4} key={idx} item>
+            <Card
+              key={idx}
+              sx={{
+                backgroundColor: colors[idx % colors.length],
+                borderRadius: '10px',
+                height: '100%',
+
+                m: 1,
+                width: 275,
+                height: 275,
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                }}
+              >
+                <Box p={2}>
+                  <Typography
+                    color="text.primary"
+                    variant="h5"
+                    sx={{
+                      display: 'block',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     {plan.name.slice(0, 30) +
                       (plan.name.length > 30 ? '...' : '')}
                   </Typography>
                   <Typography
                     color="text.primary"
                     variant="p"
-                    sx={{ display: 'block' }}
+                    sx={{ display: 'block', mt: '30px' }}
                   >
                     {plan.description.slice(0, 45) +
                       (plan.description.length > 45 ? '...' : '')}
@@ -62,23 +118,28 @@ const BrowsePlans = ({ plans, preferredCategories }) => {
                   <Typography color="text.primary" variant="body1">
                     <b>Created By</b>: {plan.creator.name}
                   </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    variant="contained"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      router.push(`/plans/browse/${plan._id}`);
-                    }}
-                  >
-                    View Details
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+                </Box>
+                <Button
+                  sx={{
+                    backgroundColor: '#192a56',
+                    color: 'white',
+                    borderTopLeftRadius: '0px',
+                    borderTopRightRadius: '0px',
+                  }}
+                  variant="contained"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/plans/browse/${plan._id}`);
+                  }}
+                >
+                  View Details
+                </Button>
+              </Box>
+            </Card>
+            // </Grid>
           );
         })}
-      </Grid>
+      </Box>
     </>
   );
 };

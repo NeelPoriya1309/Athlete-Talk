@@ -46,16 +46,28 @@ const MyPlans = ({ userPlans }) => {
       >
         My Plans
       </Typography>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {userPlans.map((plan, idx) => (
-          <Grid item key={idx} xs={4}>
-            <Card sx={{ maxWidth: '300px', margin: 'auto' }}>
+          <Box key={idx}>
+            <Card
+              sx={{
+                width: '300px',
+                height: '300px',
+                m: 1,
+                borderRadius: '10px',
+              }}
+            >
               <Box
                 sx={{
                   height: 140,
                   background: `${gradients[idx % gradients.length]}`,
                 }}
-                title="green iguana"
               />
               <Box
                 sx={{
@@ -79,7 +91,13 @@ const MyPlans = ({ userPlans }) => {
                   gutterBottom
                   variant="h5"
                   component="div"
-                  sx={{ mt: '10px' }}
+                  sx={{
+                    mt: '10px',
+                    display: 'block',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
                 >
                   {plan.plan.name}
                 </Typography>
@@ -106,9 +124,9 @@ const MyPlans = ({ userPlans }) => {
                 )}
               </CardActions>
             </Card>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
     </>
   );
 };

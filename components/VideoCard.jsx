@@ -5,49 +5,92 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
 
 export default function VideoCard({ details }) {
   return (
-    <Card sx={{}}>
+    <Card
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        borderRadius: '10px',
+        boxShadow: 3,
+        '&:hover': {
+          boxShadow: 5,
+        },
+      }}
+    >
       <iframe
         src={`https://drive.google.com/file/d/${details.gDriveID}/preview`}
-        style={{ minHeight: 230, width: '100%' }}
+        style={{ minHeight: 230, width: '100%', borderRadius: '10px' }}
         allow="autoplay"
         allowFullScreen
       ></iframe>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{
+            display: 'block',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {details.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            display: 'block',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {details.description}
         </Typography>
       </CardContent>
-      <CardContent>
-        <Typography variant="body2" color="primary">
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography sx={{ mb: 1 }} variant="body2" color="primary">
           Categories
         </Typography>
-        {details.categories.map((category, idx) => {
-          if (idx < 3)
-            return (
-              <Typography
-                key={idx}
-                sx={{
-                  ml: 2,
-                  mt: 0.5,
-                  borderRadius: 5,
-                  bgcolor: 'primary.light',
-                  width: 'fit-content',
-                  pl: 1,
-                  pr: 1,
-                }}
-                variant="body2"
-                color="white"
-              >
-                {category.name}
-              </Typography>
-            );
-        })}
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
+          }}
+        >
+          {details.categories.map((category, idx) => {
+            if (idx < 3)
+              return (
+                <Typography
+                  key={idx}
+                  sx={{
+                    mr: 1,
+                    borderRadius: 5,
+                    bgcolor: 'primary.light',
+                    width: 'fit-content',
+                    pl: 1,
+                    pr: 1,
+                  }}
+                  variant="body2"
+                  color="white"
+                >
+                  {category.name}
+                </Typography>
+              );
+          })}
+        </Box>
       </CardContent>
     </Card>
   );

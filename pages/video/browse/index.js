@@ -1,19 +1,33 @@
 import React, { useEffect } from 'react';
 const { server } = require('./../../../utils/server');
 import VideoCard from '../../../components/VideoCard';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 const BrowseVideos = ({ videos }) => {
   return (
-    <Grid container spacing={2}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+      }}
+    >
       {videos &&
         videos.length !== 0 &&
         videos.map((video, idx) => (
-          <Grid key={idx} xs={4} item>
+          <Box
+            key={idx}
+            sx={{
+              m: 1,
+              width: 350,
+              height: 450,
+            }}
+          >
             <VideoCard details={video} />
-          </Grid>
+          </Box>
         ))}
-    </Grid>
+    </Box>
   );
 };
 

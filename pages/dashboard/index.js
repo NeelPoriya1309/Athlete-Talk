@@ -84,11 +84,22 @@ const Dashboard = ({ plans, categories }) => {
                 />
               </Grid>
               <Grid item xs={12} md={4} p={2}>
-                <Typography variant="h5">In Progress</Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    p: 1,
+                  }}
+                >
+                  In Progress
+                </Typography>
                 {inProgressPlans.map((plan) => (
                   <Box
                     key={plan._id}
-                    sx={{ display: 'flex', justifyContent: 'space-between' }}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      p: 1,
+                    }}
                   >
                     <Typography
                       variant="h6"
@@ -105,13 +116,21 @@ const Dashboard = ({ plans, categories }) => {
                 ))}
               </Grid>
               <Grid item xs={12} md={4} p={2}>
-                <Typography variant="h5">Completed</Typography>
+                <Typography
+                  sx={{
+                    p: 1,
+                  }}
+                  variant="h5"
+                >
+                  Completed
+                </Typography>
                 {completedPlans.map((plan) => (
                   <Box
                     key={plan._id}
                     sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
+                      p: 1,
                     }}
                   >
                     <Typography sx={{ fontWeight: 'bold' }} variant="h6">
