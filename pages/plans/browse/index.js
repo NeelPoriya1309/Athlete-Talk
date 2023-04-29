@@ -35,16 +35,17 @@ const colors = [
 ];
 
 const BrowsePlans = ({ plans, preferredCategories }) => {
+  console.log(plans);
   const plansSortedByPreferredCategories = plans.sort((a, b) => {
     const aCategory = a.categories;
     const bCategory = b.categories;
     let presentA = false;
     let presentB = false;
     for (let i = 0; i < preferredCategories.length; i++) {
-      if (aCategory.includes(preferredCategories[i])) {
+      if (aCategory.some((category) => category === preferredCategories[i])) {
         presentA = true;
       }
-      if (bCategory.includes(preferredCategories[i])) {
+      if (bCategory.some((category) => category === preferredCategories[i])) {
         presentB = true;
       }
     }

@@ -1,4 +1,3 @@
-import e from 'cors';
 import Chat from '../../../../models/chatModel';
 
 const nc = require('next-connect');
