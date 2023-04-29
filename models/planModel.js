@@ -11,6 +11,10 @@ const planSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, 'Please description is required.'],
+      maxlength: [
+        250,
+        'A plan description must have less or equal than 250 characters',
+      ],
     },
     noOfDays: {
       type: Number,
